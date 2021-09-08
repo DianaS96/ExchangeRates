@@ -13,6 +13,7 @@ def check_curr():
     else:
         print("Invalid currency. Try again")
         check_curr()
+
 # Function check_date() check whether input date is correct. If date is invalid, you should enter the date again
 def check_date(curr, curr_id):
     flag = 0
@@ -48,29 +49,13 @@ def check_date(curr, curr_id):
 def get_data(start_date, end_date, curr, curr_id):
     list_data = list()
     list_header = ["Дата", "Единиц", "Курс"]
-    # https://www.cbr.ru/currency_base/dynamics/?UniDbQuery.Posted=True&UniDbQuery.so=1&UniDbQuery.mode=1&UniDbQuery.date_req1=&UniDbQuery.date_req2=&UniDbQuery.VAL_NM_RQ=R01010&UniDbQuery.From=02.09.2021&UniDbQuery.To=09.09.2021
     url = "https://www.cbr.ru/currency_base/dynamics/?UniDbQuery.Posted=True&UniDbQuery.so=1&UniDbQuery.mode=1&UniDbQuery.date_req1=&UniDbQuery.date_req2=&UniDbQuery.VAL_NM_RQ="\
           + curr_id + "&UniDbQuery.From=" + f'{int(start_date.tm_mday):02}' + "." + f'{int(start_date.tm_mon):02}' + "." + str(start_date.tm_year) \
     + "&UniDbQuery.To=" + f'{int(end_date.tm_mday):02}' + "." + f'{int(end_date.tm_mon):02}' + "." + str(end_date.tm_year)
-    #print(url)
 
     resp = requests.get(url)
     tree = BeautifulSoup(resp.content, "html.parser")
-    """   #print(tree)
-    #date = tree.find("button", {"class":"datepicker-filter_button"})
 
-    # find table on the website
- 
-    header = tree.find_all('table')[0].find_all('tr')[1:2]
- #   print(header)
-    for item in header:
- #       print(item.text)
-        try:
-            list_header.append(str(item.text))
-        except:
-            continue
-    print(list_header)
-"""
     data = tree.find_all('table')[0].find_all('tr')[2:]
     for elem in data:
         sub_table = list()
@@ -80,11 +65,9 @@ def get_data(start_date, end_date, curr, curr_id):
             except:
                 continue
         list_data.append(sub_table)
- #   print(list_data)
     df = pd.DataFrame(data=list_data, columns=list_header)
- #   print(df)
+
     # Write data in a csv file
-#    df.to_csv(("Курсы с " + str(start_date).replace('/', '.')) + " по " + "str(end_date).replace('/', '.'))" + ".csv, encoding='utf-8-sig')
     sdate = str(start_date.tm_mday) + "." + str(start_date.tm_mon) + "." + str(start_date.tm_year)
     edate = str(end_date.tm_mday) + "." + str(end_date.tm_mon) + "." + str(end_date.tm_year)
     df.to_csv(f"Курсы {curr} с {sdate} по {edate}.csv", encoding='utf-8-sig')
