@@ -11,5 +11,5 @@ The program starts from the "menu": user should select an option:
 
 0 - Exit
 
-If user select smth other than 1 or 0, then the programm will ask to select an option again.
+If user select smth other than, then the programm will ask to select an option again.
 Else, the programm will make an action that is described in menu under the selected option.
