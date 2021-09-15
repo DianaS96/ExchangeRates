@@ -5,6 +5,8 @@ The program starts from the "menu": user should select an option:
 
 1 - Import official exchange rates on selected date from CBR.RU
 
+2 - Import official exchange rates for the period (DOESNT IMPORT FOREX FOR WEEKENDS AND HOLIDAYS)
+
 0 - Exit
 
 If user select smth other than 1 or 0, then the programm will ask to select an option again.
