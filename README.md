@@ -1,4 +1,4 @@
-# ExchangeRates
+# ExchangeRates :currency_exchange:	
 This application allows users to download exchage rates from cbr.ru in CSV file.
 
 The program starts from the "menu", where user should select one of the following options:
